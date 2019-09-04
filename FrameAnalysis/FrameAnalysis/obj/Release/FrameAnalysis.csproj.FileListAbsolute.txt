@@ -1,0 +1,7 @@
+C:\Users\Administrator\source\repos\FrameAnalysis\FrameAnalysis\bin\Release\FrameAnalysis.dll
+C:\Users\Administrator\source\repos\FrameAnalysis\FrameAnalysis\bin\Release\FrameAnalysis.pdb
+C:\Users\Administrator\source\repos\FrameAnalysis\FrameAnalysis\bin\Release\Newtonsoft.Json.dll
+C:\Users\Administrator\source\repos\FrameAnalysis\FrameAnalysis\obj\Release\FrameAnalysis.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\FrameAnalysis\FrameAnalysis\obj\Release\FrameAnalysis.csproj.CopyComplete
+C:\Users\Administrator\source\repos\FrameAnalysis\FrameAnalysis\obj\Release\FrameAnalysis.dll
+C:\Users\Administrator\source\repos\FrameAnalysis\FrameAnalysis\obj\Release\FrameAnalysis.pdb
