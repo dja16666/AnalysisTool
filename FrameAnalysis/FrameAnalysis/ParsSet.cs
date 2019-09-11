@@ -6,14 +6,6 @@ namespace FrameAnalysis
 {
     public class ParseSet
     {
-        readonly static UInt16 MOTOR_ERR_RECORD_PARAM3_PREFIX_MASK = 0xF000;
-        readonly static UInt16 MOTOR_ERR_RECORD_PARAM3_ERR_MASK = 0x0FFF;
-
-        private enum Motor_Param3_Prefix{
-            MOTOR_ERR_RECORD_PARAM3_PREFIX_NONE = 0x0000,
-            MOTOR_ERR_RECORD_PARAM3_PREFIX_IOSEAL = 0x1000,
-        };
-
         private enum ID
         {
             NONE = 0,
@@ -132,9 +124,9 @@ namespace FrameAnalysis
             { "01 C0", "AT_ERR_OP_POWEROFF" }, 
             { "01 FF", "AT_ERR_UNKNOW" },
 
-            { "03 04", "MOTOR_BIT_RES_CURRENTOVER" },
-            { "03 08", "MOTOR_BIT_RES_TIMEOUT" },
-            { "03 10", "MOTOR_BIT_RES_CURRENTDELTA" },
+            //{ "03 04", "MOTOR_BIT_RES_CURRENTOVER" },
+            //{ "03 08", "MOTOR_BIT_RES_TIMEOUT" },
+            //{ "03 10", "MOTOR_BIT_RES_CURRENTDELTA" },
 
             { "04 00", "SYSTEM_ERR_NONE"},
             { "04 01", "SYSTEM_ERR_RESET"},
@@ -269,32 +261,16 @@ namespace FrameAnalysis
                     case ID.MOTOR:
                         {
                             MotorErr motorErr = new MotorErr();
+                            errStr = "";
+                            errStr = motorErr.ErrTranslate(data[6]);
+
                             UInt16 tmp;
                             tmp = Convert.ToUInt16(data[8] + (data[9] * 256));
-                            param.Param1 = tmp.ToString();
+                            param.Param1 = motorErr.Param1Tanslate(tmp);
                             tmp = Convert.ToUInt16(data[10] + (data[11] * 256));
-                            param.Param2 = tmp.ToString();
+                            param.Param2 = motorErr.Param2Tanslate(tmp);
                             tmp = Convert.ToUInt16(data[12] + (data[13] * 256));
-                            //if param3 is seal io state
-                            if ((tmp & MOTOR_ERR_RECORD_PARAM3_PREFIX_MASK) == (UInt16)Motor_Param3_Prefix.MOTOR_ERR_RECORD_PARAM3_PREFIX_IOSEAL)
-                            {
-                                if((tmp & MOTOR_ERR_RECORD_PARAM3_ERR_MASK) == 1)
-                                {
-                                    param.Param3 = "Seal Off";
-                                }
-                                else if((tmp & MOTOR_ERR_RECORD_PARAM3_ERR_MASK) == 0)
-                                {
-                                    param.Param3 = "Seal On";
-                                }
-                                else
-                                {
-                                    param.Param3 = "Seal Unknow";
-                                }
-                            }
-                            else
-                            {
-                                param.Param3 = null;
-                            }
+                            param.Param3 = motorErr.Param3Tanslate(tmp);
                         }
                         break;
                     case ID.SYSTEM:

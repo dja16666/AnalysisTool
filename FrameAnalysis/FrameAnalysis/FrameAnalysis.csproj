@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Crc8.cs" />
+    <Compile Include="Errcs.cs" />
     <Compile Include="MotorErr.cs" />
     <Compile Include="ParsSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
