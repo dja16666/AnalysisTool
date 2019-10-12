@@ -13,6 +13,7 @@ namespace FrameAnalysis
             CELL = 2,
             MOTOR = 3,
             SYSTEM = 4,
+            IO = 5,
         }
 
         private static Dictionary<string, string> ID_dict = new Dictionary<string, string>
@@ -22,6 +23,7 @@ namespace FrameAnalysis
             { "02", "CELL"},
             { "03", "MOTOR"},
             { "04", "SYSTEM"},
+            { "05", "IO"},
         };
 
         private static Dictionary<string, string> state_dict = new Dictionary<string, string>
@@ -53,6 +55,14 @@ namespace FrameAnalysis
             { "04 06", "SYSTEM_RST_WWD"},
             { "04 07", "SYSTEM_RST_LPW"},
             { "04 08", "SYSTEM_RST_TWD"},
+            //IO
+            { "05 00", "IO_SENSOR_ID_CLOSETOP"},
+            { "05 01", "IO_SENSOR_ID_CLOSEBOTTOM"},
+            { "05 02", "IO_SENSOR_ID_BREAK"},
+            { "05 03", "IO_SENSOR_ID_PLUGIN"},
+            { "05 04", "IO_SENSOR_ID_SEAL"},
+            { "05 05", "IO_SENSOR_ID_KEY"},
+            { "05 06", "IO_SENSOR_ID_SELFTEST"},
         };
 
         private static Dictionary<string, string> err_dict = new Dictionary<string, string>
@@ -266,20 +276,22 @@ namespace FrameAnalysis
 
                             UInt16 tmp;
                             tmp = Convert.ToUInt16(data[8] + (data[9] * 256));
-                            param.Param1 = motorErr.Param1Tanslate(tmp);
+                            param.Param1 = motorErr.Param1Translate(tmp);
                             tmp = Convert.ToUInt16(data[10] + (data[11] * 256));
-                            param.Param2 = motorErr.Param2Tanslate(tmp);
+                            param.Param2 = motorErr.Param2Translate(tmp);
                             tmp = Convert.ToUInt16(data[12] + (data[13] * 256));
-                            param.Param3 = motorErr.Param3Tanslate(tmp);
+                            param.Param3 = motorErr.Param3Translate(tmp);
                         }
                         break;
                     case ID.SYSTEM:
                         {
+                            SystemErr systemErr = new SystemErr();
                             if (stateStr == "SYSTEM_RST_TWD")
                             {
                                 if ((data[8] != 0) || (data[9] != 0)) {
                                     param.Param1 = data[8].ToString();
-                                    param.Param2 = GetNameWithCrc(data[9]);
+                                    param.Param2 = systemErr.Param2Translate(data[9]);//GetNameWithCrc(data[9]);
+                                    param.Param3 = systemErr.Param3Translate(data[10]);
                                 }
                             }
                             else
@@ -287,6 +299,16 @@ namespace FrameAnalysis
                                 param.Param1 = null;
                                 param.Param2 = null;
                             }
+                        }
+                        break;
+                    case ID.IO:
+                        {
+                            IOErr ioerr = new IOErr();
+                            errStr = "";
+                            errStr = ioerr.ErrTranslate(data[6]);
+                            UInt16 tmp;
+                            tmp = Convert.ToUInt16(data[8] + (data[9] * 256));
+                            param.Param1 = ioerr.Param1Translate(tmp);
                         }
                         break;
                     default:
@@ -338,33 +360,7 @@ namespace FrameAnalysis
             return str.ToUpper();
         }
 
-        static readonly string[] Task_Name_Array =
-        {
-            "ATDev_Task",
-            "HGModCommRecvTask",
-            "HGModCommHandleTask",
-            "MotorTask",
-            "ESealHandleTask",
-            "gnssTask",
-            "OWHandleTask",
-            "sesorTask",
-            "UartDMAHandleTask",
-        };
-        static string GetNameWithCrc(byte Crc)
-        {
-            string name_str = null;
-            int i = 0;
-            do
-            {
-                byte tmp_crc = Crc8.CalcCRC8(System.Text.Encoding.Default.GetBytes(Task_Name_Array[i]), Task_Name_Array[i].Length);
-                if(Crc == tmp_crc)
-                {
-                    name_str = Task_Name_Array[i];
-                }
-                i++;
-            } while ((name_str == null) && (i < Task_Name_Array.Length));
-            return name_str;
-        }
+        
     }
 
     internal class Param

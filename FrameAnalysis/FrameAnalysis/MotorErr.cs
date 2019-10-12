@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FrameAnalysis
 {
-    internal class MotorErr: Errcs
+    internal class MotorErr: Errs
     {
         readonly static UInt16 MOTOR_ERR_RECORD_PARAM3_PREFIX_MASK = 0xF000;
         readonly static UInt16 MOTOR_ERR_RECORD_PARAM3_ERR_MASK = 0x0FFF;
@@ -46,21 +46,21 @@ namespace FrameAnalysis
             return str;
         }
 
-        public override string Param1Tanslate(UInt16 data)
+        public override string Param1Translate(UInt16 data)
         {
             string str = "Max_I:";
             str += data.ToString();
             return str;
         }
 
-        public override string Param2Tanslate(UInt16 data)
+        public override string Param2Translate(UInt16 data)
         {
             string str = "Cell_V:";
             str += data.ToString();
             return str;
         }
 
-        public override string Param3Tanslate(UInt16 data)
+        public override string Param3Translate(UInt16 data)
         {
             string str = "Seal_IO:";
 
@@ -86,7 +86,7 @@ namespace FrameAnalysis
 
             return str;
         }
-        public override string Param4Tanslate(UInt16 data)
+        public override string Param4Translate(UInt16 data)
         {
             string str = null;
             return str;

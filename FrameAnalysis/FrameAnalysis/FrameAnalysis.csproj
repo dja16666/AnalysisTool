@@ -46,10 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Crc8.cs" />
-    <Compile Include="Errcs.cs" />
+    <Compile Include="Errs.cs" />
+    <Compile Include="IOErr.cs" />
     <Compile Include="MotorErr.cs" />
     <Compile Include="ParsSet.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SystemErr.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
