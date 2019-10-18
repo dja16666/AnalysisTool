@@ -12,3 +12,4 @@ C:\Users\Administrator\source\repos\AnalysisTool\FrameAnalysis\FrameAnalysis\bin
 C:\Users\Administrator\source\repos\AnalysisTool\FrameAnalysis\FrameAnalysis\bin\Release\FrameAnalysis.pdb
 C:\Users\Administrator\source\repos\AnalysisTool\FrameAnalysis\FrameAnalysis\bin\Release\Newtonsoft.Json.dll
 C:\Users\Administrator\source\repos\AnalysisTool\FrameAnalysis\FrameAnalysis\obj\Release\FrameAnalysis.csproj.CopyComplete
+C:\Users\Administrator\source\repos\AnalysisTool\FrameAnalysis\FrameAnalysis\obj\Release\FrameAnalysis.csprojAssemblyReference.cache
